@@ -12,14 +12,15 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
     
-
-    
-    
-    
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if let items = defaults.array(forKey: "TodoListItemsArray") as? [String] {
+            itemArray = items;
+        }
         
         tableView.separatorStyle = .singleLine;
         
@@ -62,11 +63,17 @@ class TodoListViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Add New Todo Item", message: "", preferredStyle: .alert);//Popup
         var textField = UITextField();
+        
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //What will happen once the user clicks the add button on UI alert
             print("Add Item pressed, Success!");
+            
             if(textField.text != ""){
+                
             self.itemArray.append(textField.text!) // in a closure
+                
+            self.defaults.set(self.itemArray, forKey: "TodoListItemsArray"); //Persisting the Data defaults set in global Above
+                
             } else {
                 print("Empty!")
             }

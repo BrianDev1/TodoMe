@@ -12,32 +12,35 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = [TodoData]()
     
-    let defaults = UserDefaults.standard
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    
+   // let defaults = UserDefaults.standard
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-//        if let items = defaults.array(forKey: "TodoListItemsArray") as? [String] {
-//            itemArray = items;
-//        }
         
-        let newItem = TodoData()
-        newItem.title = "Find Mike"             //Initial Items
-        itemArray.append(newItem)
+       // print(dataFilePath)
         
-        let newItem2 = TodoData()
-        newItem2.title = "Buy Eggos"             //Initial Items
-        itemArray.append(newItem2)
+        loadItems()
         
-        let newItem3 = TodoData()
-        newItem3.title = "Destroy Demogorgon"             //Initial Items
-        itemArray.append(newItem3)
+//        let newItem = TodoData()
+//        newItem.title = "Find Mike"             //Initial Items
+//        itemArray.append(newItem)
+//
+//        let newItem2 = TodoData()
+//        newItem2.title = "Buy Eggos"             //Initial Items
+//        itemArray.append(newItem2)
+//
+//        let newItem3 = TodoData()
+//        newItem3.title = "Destroy Demogorgon"             //Initial Items
+//        itemArray.append(newItem3)
         
-        if let items = defaults.array(forKey: "TodoListItemsArray") as? [TodoData] {
-                        itemArray = items;
-            }
+//        if let items = defaults.array(forKey: "TodoListItemsArray") as? [TodoData] {
+//                        itemArray = items;
+//            }
         
         tableView.separatorStyle = .singleLine;
         
@@ -91,7 +94,9 @@ class TodoListViewController: UITableViewController {
         
         itemArray[indexPath.row].checked = !itemArray[indexPath.row].checked // If it was checked then set oposite and vice versa
         
-        tableView.reloadData()  // Reload data to get new data set above from the objects
+        saveData() //Calling savedata method
+        
+        //tableView.reloadData()  // Reload data to get new data set above from the objects
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -117,7 +122,7 @@ class TodoListViewController: UITableViewController {
                 self.itemArray.append(newItem);
             //self.itemArray.append(textField.text!) // in a closure
                 
-            self.defaults.set(self.itemArray, forKey: "TodoListItemsArray"); //Persisting the Data defaults set in global Above
+                self.saveData()
                 
             } else {
                 print("Empty!")
@@ -136,6 +141,32 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
         
         
+    }
+    
+    func saveData() {
+        
+        let encoder = PropertyListEncoder() //Creating an encoder to encode our data
+        
+        do{
+            let data = try encoder.encode(itemArray)    // Encoding our data
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding item array, \(error)")
+        }
+       
+        tableView.reloadData()
+        
+    }
+    
+    func loadItems() {
+        if let data = try? Data (contentsOf: dataFilePath!){
+            let decoder = PropertyListDecoder()                         // Decoding our data
+            do{
+               itemArray = try decoder.decode([TodoData].self, from: data)
+            } catch {
+                print("Error decoding items, \(error)")
+            }
+        }
     }
     
 

@@ -9,7 +9,7 @@
 import Foundation
 
 
-class TodoData {
+class TodoData: Codable{
     
     var title : String = "";
     var checked : Bool = false;

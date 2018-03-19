@@ -10,17 +10,34 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    var itemArray = [TodoData]()
     
     let defaults = UserDefaults.standard
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        if let items = defaults.array(forKey: "TodoListItemsArray") as? [String] {
-            itemArray = items;
-        }
+//        if let items = defaults.array(forKey: "TodoListItemsArray") as? [String] {
+//            itemArray = items;
+//        }
+        
+        let newItem = TodoData()
+        newItem.title = "Find Mike"             //Initial Items
+        itemArray.append(newItem)
+        
+        let newItem2 = TodoData()
+        newItem2.title = "Buy Eggos"             //Initial Items
+        itemArray.append(newItem2)
+        
+        let newItem3 = TodoData()
+        newItem3.title = "Destroy Demogorgon"             //Initial Items
+        itemArray.append(newItem3)
+        
+        if let items = defaults.array(forKey: "TodoListItemsArray") as? [TodoData] {
+                        itemArray = items;
+            }
         
         tableView.separatorStyle = .singleLine;
         
@@ -36,7 +53,19 @@ class TodoListViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
-        cell.textLabel?.text = itemArray[indexPath.row];  //Label in every cell
+        let item = itemArray[indexPath.row]
+        
+        cell.textLabel?.text = item.title;  //Label in every cell
+        
+        //Ternary operator
+        //value = condition ? valueIfTrue : valueIfFalse
+        cell.accessoryType = item.checked ? .checkmark : .none
+        
+//        if (item.checked == true) {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//        }
         
         return cell;
     }
@@ -44,13 +73,25 @@ class TodoListViewController: UITableViewController {
     //MARK - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(itemArray[indexPath.row])
+//        print(itemArray[indexPath.row])
+//        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+//            tableView.cellForRow(at: indexPath)?.accessoryType = .none        // Remove CheckMark
+//            itemArray[indexPath.row].checked = false;
+//        } else {
+//            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark;   //Adding an accessory to each cell that was selected
+//            itemArray[indexPath.row].checked = true;
+//        }
+//        if itemArray[indexPath.row].checked == false {
+//            itemArray[indexPath.row].checked = true;
+//        } else {
+//            itemArray[indexPath.row].checked = false;
+//        }
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none        // Remove CheckMark
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark;   //Adding an accessory to each cell that was selected
-        }
+        //simplified
+        
+        itemArray[indexPath.row].checked = !itemArray[indexPath.row].checked // If it was checked then set oposite and vice versa
+        
+        tableView.reloadData()  // Reload data to get new data set above from the objects
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -70,7 +111,11 @@ class TodoListViewController: UITableViewController {
             
             if(textField.text != ""){
                 
-            self.itemArray.append(textField.text!) // in a closure
+            let newItem = TodoData()
+            
+                newItem.title = textField.text!;
+                self.itemArray.append(newItem);
+            //self.itemArray.append(textField.text!) // in a closure
                 
             self.defaults.set(self.itemArray, forKey: "TodoListItemsArray"); //Persisting the Data defaults set in global Above
                 

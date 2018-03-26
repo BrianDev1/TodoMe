@@ -14,9 +14,12 @@
 		3C43F0C9205D14770082220E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C43F0C7205D14770082220E /* LaunchScreen.storyboard */; };
 		3C9AA4A4205FEA4500AB9AE8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AA4A2205FEA4500AB9AE8 /* DataModel.xcdatamodeld */; };
 		3CF022982067D254009DF0D0 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF022972067D254009DF0D0 /* CategoryViewController.swift */; };
+		C7FC4DA0D5A3AC032238182C /* Pods_TodoMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F26B20D192DF2F6695C4ED2 /* Pods_TodoMe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		282BB2971AE72F71CEE0E784 /* Pods-TodoMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-TodoMe/Pods-TodoMe.release.xcconfig"; sourceTree = "<group>"; };
+		2F26B20D192DF2F6695C4ED2 /* Pods_TodoMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C43F0BB205D14770082220E /* TodoMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C43F0BE205D14770082220E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3C43F0C0205D14770082220E /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		3C43F0CA205D14770082220E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C9AA4A3205FEA4500AB9AE8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3CF022972067D254009DF0D0 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		5462DC8EE4A22003CB7B3726 /* Pods-TodoMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodoMe/Pods-TodoMe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,12 +37,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7FC4DA0D5A3AC032238182C /* Pods_TodoMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A3BC2CD4D3A8ADAD4D433A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F26B20D192DF2F6695C4ED2 /* Pods_TodoMe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3C0045D7205D64C5001D792B /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +91,8 @@
 			children = (
 				3C43F0BD205D14770082220E /* TodoMe */,
 				3C43F0BC205D14770082220E /* Products */,
+				3E76D64D9B097EB4C0955693 /* Pods */,
+				3A3BC2CD4D3A8ADAD4D433A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +117,15 @@
 			path = TodoMe;
 			sourceTree = "<group>";
 		};
+		3E76D64D9B097EB4C0955693 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5462DC8EE4A22003CB7B3726 /* Pods-TodoMe.debug.xcconfig */,
+				282BB2971AE72F71CEE0E784 /* Pods-TodoMe.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,9 +133,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3C43F0CD205D14770082220E /* Build configuration list for PBXNativeTarget "TodoMe" */;
 			buildPhases = (
+				8BD28E84654BBB15DFE3D4F9 /* [CP] Check Pods Manifest.lock */,
 				3C43F0B7205D14770082220E /* Sources */,
 				3C43F0B8205D14770082220E /* Frameworks */,
 				3C43F0B9205D14770082220E /* Resources */,
+				C1E15CFF368E9A6DDE9460A3 /* [CP] Embed Pods Frameworks */,
+				C79BD52D2DC3809291CE0222 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -168,6 +195,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8BD28E84654BBB15DFE3D4F9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TodoMe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1E15CFF368E9A6DDE9460A3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TodoMe/Pods-TodoMe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TodoMe/Pods-TodoMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C79BD52D2DC3809291CE0222 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TodoMe/Pods-TodoMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3C43F0B7205D14770082220E /* Sources */ = {
@@ -312,6 +395,7 @@
 		};
 		3C43F0CE205D14770082220E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5462DC8EE4A22003CB7B3726 /* Pods-TodoMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -326,6 +410,7 @@
 		};
 		3C43F0CF205D14770082220E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 282BB2971AE72F71CEE0E784 /* Pods-TodoMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

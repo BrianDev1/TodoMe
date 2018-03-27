@@ -10,7 +10,8 @@ import UIKit
 import CoreData
 import RealmSwift
 
-class CategoryViewController: UITableViewController {
+
+class CategoryViewController: SwipeTableViewController {
     
     let realm = try! Realm()          //Creating a new realm
     
@@ -20,6 +21,8 @@ class CategoryViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+             //Setting row height
 
         loadData()
         
@@ -68,11 +71,9 @@ class CategoryViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)  // overriding the super class function and setting the cell
         
-        let categoryItem = categoryArray?[indexPath.row]
-        
-        cell.textLabel?.text = categoryItem?.name ?? "No Categories Added yet"
+        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Categories Added yet"
         
         return cell
     }
@@ -108,18 +109,31 @@ class CategoryViewController: UITableViewController {
     func loadData() {
         
         categoryArray = realm.objects(Category.self)  //Load all our categories
-        
-//        let request : NSFetchRequest<Category> = Category.fetchRequest()
-//        
-//        do {
-//            categoryArray = try context.fetch(request)
-//        } catch {
-//            print("Error Fetching the Context, \(error)")
-//        }
-//        
+    
        tableView.reloadData()
         
     }
     
-    
+    //MARK - Delete Data From Swipe, overriding the update from superclass
+    override func updateModel(at indexPath: IndexPath) {
+        if let categoryForDeletion = self.categoryArray?[indexPath.row] {  //Optional Binding to handle the optional
+            do{
+                try self.realm.write {
+                    self.realm.delete(categoryForDeletion)
+                }
+            } catch {
+                print("Error deleting at the cell with, \(error)")
+            }
+            //tableView.reloadData()
+        }
+    }
 }
+
+
+
+
+
+
+
+
+

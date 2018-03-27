@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import RealmSwift
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     var todoItems: Results<TodoData>?
     
@@ -21,44 +21,11 @@ class TodoListViewController: UITableViewController {
             loadItems()
         }
     }
-    
-    //let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-    
-   // let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-   // let defaults = UserDefaults.standard
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let date = NSDate()
-        
-        print(String(describing: date) + "Hello")
-        
-        // Do any additional setup after loading the view, typically from a nib.
-       // print(dataFilePath)
-     //   loadItems()
-        
-//        let newItem = TodoData()
-//        newItem.title = "Find Mike"             //Initial Items
-//        itemArray.append(newItem)
-//
-//        let newItem2 = TodoData()
-//        newItem2.title = "Buy Eggos"             //Initial Items
-//        itemArray.append(newItem2)
-//
-//        let newItem3 = TodoData()
-//        newItem3.title = "Destroy Demogorgon"             //Initial Items
-//        itemArray.append(newItem3)
-        
-//        if let items = defaults.array(forKey: "TodoListItemsArray") as? [TodoData] {
-//                        itemArray = items;
-//            }
-        
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
-        //loadItems()
         
         tableView.separatorStyle = .singleLine;
         
@@ -72,7 +39,7 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = todoItems?[indexPath.row] {
         
@@ -84,12 +51,7 @@ class TodoListViewController: UITableViewController {
         }else {
             cell.textLabel?.text = "No Items Added"
         }
-        
-//        if (item.checked == true) {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
+
         
         return cell;
     }
@@ -174,6 +136,20 @@ class TodoListViewController: UITableViewController {
     func loadItems(){
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         tableView.reloadData()
+    }
+    
+    //MARK - Delete Item via updateData in super class
+    override func updateModel(at indexPath: IndexPath) {
+        
+        if let itemForDeletion = todoItems?[indexPath.row] {
+            do{
+                try realm.write {
+                    realm.delete(itemForDeletion)
+                }
+            } catch {
+                print("Error Deleting item, \(error)")
+            }
+        }
     }
     
 }

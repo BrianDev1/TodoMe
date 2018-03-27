@@ -31,6 +31,11 @@ class TodoListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let date = NSDate()
+        
+        print(String(describing: date) + "Hello")
+        
         // Do any additional setup after loading the view, typically from a nib.
        // print(dataFilePath)
      //   loadItems()
@@ -125,6 +130,7 @@ class TodoListViewController: UITableViewController {
                     try self.realm.write {
                         let newItem = TodoData()
                         newItem.title = textField.text!;
+                        newItem.dateCreated = Date();
                         currentCategory.items.append(newItem)
                     }
                    // self.saveData(data: newItem)
@@ -163,83 +169,39 @@ class TodoListViewController: UITableViewController {
         }
         
         tableView.reloadData()
-        
-       // let encoder = PropertyListEncoder() //Creating an encoder to encode our data
-//        do{
-//           try context.save()
-////            let data = try encoder.encode(itemArray)    // Encoding our data
-////            try data.write(to: dataFilePath!)
-//        } catch {
-//            print("Error saving context, \(error)")
-//        }
-        
     }
     
     func loadItems(){
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+        tableView.reloadData()
     }
     
-//    func loadItems(with request: NSFetchRequest<TodoData> = TodoData.fetchRequest()/*Default value*/,predicate : NSPredicate? = nil) {
-//       // let request : NSFetchRequest<TodoData> = TodoData.fetchRequest()
-//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!) //Predicate to get items of the current categorys
-//
-//        if let additionalPredicate = predicate {
-//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-//
-//        }else {
-//            request.predicate = categoryPredicate
-//        }
-//
-//        do{
-//          itemArray =  try context.fetch(request)   // Save results in item view array
-//        } catch {
-//            print("Error Fetching the data from context, \(error)")
-//        }
-//
-//        tableView.reloadData()
-//    }
-    
-   
-
 }
 
 
 //MARK - SEARCH Bar Methods
-//extension TodoListViewController: UISearchBarDelegate {
-//
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        let request: NSFetchRequest<TodoData> = TodoData.fetchRequest()
-//
-//        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)  //
-//
-//
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//        loadItems(with: request, predicate: request.predicate)
-//
-//        //request.sortDescriptors = [sortDescriptor] // Expects an array, but we only want one, so we stipulate it
-//
-////        do{
-////            itemArray =  try context.fetch(request)   // Save results in item view array
-////        } catch {
-////            print("Error Fetching the data from context, \(error)")
-////        }
-////
-////        tableView.reloadData()
-//
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            loadItems()
-//
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder() // Remove keyboard and cursor if no text
-//            }
-//
-//        }
-//    }
-//}
+extension TodoListViewController: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        
+        
+        tableView.reloadData()
+
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder() // Remove keyboard and cursor if no text
+            }
+
+        }
+    }
+}
 
 
 

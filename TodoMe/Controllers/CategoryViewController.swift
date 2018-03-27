@@ -14,7 +14,7 @@ class CategoryViewController: UITableViewController {
     
     let realm = try! Realm()          //Creating a new realm
     
-    var categoryArray: Results<Category>?
+    var categoryArray: Results<Category>?  // Collection type, of results that are category objects
     
     //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 

@@ -11,6 +11,6 @@ import RealmSwift
 
 class Category: Object {
     @objc dynamic var name: String = ""
-    let items = List<TodoData>()
+    let items = List<TodoData>()    //Relationship, categories can have a list of items
     
 }
